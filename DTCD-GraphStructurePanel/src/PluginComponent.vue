@@ -5,218 +5,237 @@
         <button class="ButtonIcon">
           <span class="FontIcon name_longDown rotate_180"></span>
         </button>
-
         <button class="ButtonIcon">
           <span class="FontIcon name_hide"></span>
         </button>
       </div>
-        
       <button class="ButtonIcon">
         <span class="FontIcon name_chevronBigDown rotate_90"></span>
       </button>
-
     </div>
-      <base-input 
-        placeholder="Поиск"
-        theme="withLeftIcon"
-        class="SearchField" 
+
+    <base-input
+      placeholder="Поиск"
+      theme="withLeftIcon"
+      class="SearchField"
+    >
+      <span
+        slot="icon-left"
+        class="FontIcon name_searchSmall size_lg"
       >
-        <span 
-          slot="icon-left" 
-          class="FontIcon name_searchSmall size_lg"
-        >
-        </span>
-      </base-input>
+      </span>
+    </base-input>
 
-      <div class="ExpanderGroup">
-        <base-expander 
-          class="PanelExpander" 
-          theme="theme_iconLeft,rotation_type2" 
+    <div class="ExpanderGroup">
+      <Tree
+        v-for="node in nodes"
+        :key="node.title"
+        :node="node"
+      />
+<!--
+      <base-expander
+        class="PanelExpander"
+        theme="theme_iconLeft,rotation_type2"
+      >
+        <span
+          slot="icon-arrow"
+          class="FontIcon name_caretDown rotate_270 size_lg"
+        ></span>
+
+        <div slot="summary">
+          <span
+            slot="icon"
+            class="FontIcon name_gridBigRound"
+          >
+        </span>ТЭЦ 1</div>
+
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
         >
-          <span 
-            slot="icon-arrow" 
+          <span
+            slot="icon-arrow"
             class="FontIcon name_caretDown rotate_270 size_lg"
-          ></span>
-           
-          <div slot="summary">
-            <span 
-              slot="icon" 
-              class="FontIcon name_gridBigRound"
-            >
-          </span>ТЭЦ 1</div>
-          
-          <base-expander 
-            class="PanelExpander type_nested" 
+          >
+          </span>
+          <div slot="summary">Блок 1
+            <span
+              slot="icon-arrow"
+              class="FontIcon name_hide size_lg"
+            ></span></div>
+
+          <base-expander
+            class="PanelExpander type_nested font_normal"
             theme="theme_iconLeft,rotation_type2"
           >
-            <span 
-              slot="icon-arrow" 
+            <span
+              slot="icon-arrow"
               class="FontIcon name_caretDown rotate_270 size_lg"
             >
             </span>
-            <div slot="summary">Блок 1
-              <span 
-                slot="icon-arrow" 
-                class="FontIcon name_hide size_lg"
-              ></span></div>
-
-            <base-expander 
-              class="PanelExpander type_nested font_normal" 
-              theme="theme_iconLeft,rotation_type2"
-            >
-              <span 
-                slot="icon-arrow" 
-                class="FontIcon name_caretDown rotate_270 size_lg"
-              >
-              </span>
-              <div slot="summary">Генератоная установка</div>
-            </base-expander>
-            
-            <base-expander  
-              class="PanelExpander type_nested font_normal" 
-              theme="theme_iconLeft,rotation_type2"
-            >
-              <span 
-                slot="icon-arrow" 
-                class="FontIcon name_caretDown rotate_270 size_lg"
-              >
-              </span>
-              <div slot="summary">Трансформаторная установка</div>
-            </base-expander>
-
-            <base-expander 
-              class="PanelExpander type_nested font_normal" 
-              theme="theme_iconLeft,rotation_type2"
-            >
-              <span 
-                slot="icon-arrow" 
-                class="FontIcon name_caretDown rotate_270 size_lg"
-              >
-              </span>
-              <div slot="summary">KE Котёл энергетический
-                <span 
-                slot="icon" 
-                class="FontIcon name_show size_lg"
-              ></span></div>
-            </base-expander>
+            <div slot="summary">Генератоная установка</div>
           </base-expander>
 
-          <base-expander 
-            class="PanelExpander type_nested" 
+          <base-expander
+            class="PanelExpander type_nested font_normal"
             theme="theme_iconLeft,rotation_type2"
           >
-            <span 
-              slot="icon-arrow" 
+            <span
+              slot="icon-arrow"
               class="FontIcon name_caretDown rotate_270 size_lg"
             >
             </span>
-            <div slot="summary">Блок 2</div>
+            <div slot="summary">Трансформаторная установка</div>
           </base-expander>
 
-          <base-expander 
-            class="PanelExpander type_nested" 
+          <base-expander
+            class="PanelExpander type_nested font_normal"
             theme="theme_iconLeft,rotation_type2"
           >
-            <span 
-              slot="icon-arrow" 
+            <span
+              slot="icon-arrow"
               class="FontIcon name_caretDown rotate_270 size_lg"
             >
             </span>
-            <div slot="summary">Блок 3</div>
+            <div slot="summary">KE Котёл энергетический
+              <span
+              slot="icon"
+              class="FontIcon name_show size_lg"
+            ></span></div>
           </base-expander>
         </base-expander>
 
-        <base-expander 
-          class="PanelExpander" 
-          theme="theme_iconLeft,rotation_type2" 
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
         >
-          <span 
-            slot="icon-arrow" 
+          <span
+            slot="icon-arrow"
             class="FontIcon name_caretDown rotate_270 size_lg"
-          ></span>
-           
-          <div slot="summary">
-            <span 
-              slot="icon" 
-              class="FontIcon name_gridBigRound"
-            >
-          </span>ТЭЦ 2</div>
-          
-          <base-expander 
-            class="PanelExpander type_nested" 
-            theme="theme_iconLeft,rotation_type2"
           >
-            <span 
-              slot="icon-arrow" 
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">Блок 1</div>
-          </base-expander>
-
-          <base-expander 
-            class="PanelExpander type_nested" 
-            theme="theme_iconLeft,rotation_type2"
-          >
-            <span 
-              slot="icon-arrow" 
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">Блок 2
-              <span 
-                slot="icon-arrow" 
-                class="FontIcon name_hide size_lg"
-              ></span></div>
-          </base-expander>
-
-          <base-expander 
-            class="PanelExpander type_nested" 
-            theme="theme_iconLeft,rotation_type2"
-          >
-            <span 
-              slot="icon-arrow" 
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">Блок 3</div>
-          </base-expander>
+          </span>
+          <div slot="summary">Блок 2</div>
         </base-expander>
 
-        <base-expander 
-          class="PanelExpander" 
-          theme="theme_iconLeft,rotation_type2" 
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
         >
-          <span 
-            slot="icon-arrow" 
+          <span
+            slot="icon-arrow"
             class="FontIcon name_caretDown rotate_270 size_lg"
-          ></span>
-           
-          <div slot="summary">
-            <span 
-              slot="icon" 
-              class="FontIcon name_gridBigRound"
-            >
-          </span>ТЭЦ 3</div>
+          >
+          </span>
+          <div slot="summary">Блок 3</div>
         </base-expander>
-      </div>
+      </base-expander>
+-->
+
+<!--
+      <base-expander
+        class="PanelExpander"
+        theme="theme_iconLeft,rotation_type2"
+      >
+        <span
+          slot="icon-arrow"
+          class="FontIcon name_caretDown rotate_270 size_lg"
+        ></span>
+
+        <div slot="summary">
+          <span
+            slot="icon"
+            class="FontIcon name_gridBigRound"
+          >
+        </span>ТЭЦ 2</div>
+
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
+        >
+          <span
+            slot="icon-arrow"
+            class="FontIcon name_caretDown rotate_270 size_lg"
+          >
+          </span>
+          <div slot="summary">Блок 1</div>
+        </base-expander>
+
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
+        >
+          <span
+            slot="icon-arrow"
+            class="FontIcon name_caretDown rotate_270 size_lg"
+          >
+          </span>
+          <div slot="summary">Блок 2
+            <span
+              slot="icon-arrow"
+              class="FontIcon name_hide size_lg"
+            ></span></div>
+        </base-expander>
+
+        <base-expander
+          class="PanelExpander type_nested"
+          theme="theme_iconLeft,rotation_type2"
+        >
+          <span
+            slot="icon-arrow"
+            class="FontIcon name_caretDown rotate_270 size_lg"
+          >
+          </span>
+          <div slot="summary">Блок 3</div>
+        </base-expander>
+      </base-expander>
+-->
+    </div>
   </div>
 </template>
 
 <script>
+import Tree from './components/Tree.vue';
+
 export default {
   name: 'PluginComponent',
+  components: { Tree },
   data: () => ({
-
+    struct: [],
   }),
-  methods: {
+  computed: {
+    nodes() {
+      const nodeMap = {};
 
+      const rootNodes = this.struct.filter(str => {
+        const { id, node, successors } = str;
+        nodeMap[id] = { node, successors };
+        return str.predecessors.length <= 0;
+      });
+
+      const generateItems = nodeID => {
+        const { successors } = nodeMap[nodeID];
+        return successors.map(suc => {
+          const sucID = suc.tag.primitiveID;
+          return { id: sucID, items: generateItems(sucID) };
+        });
+      };
+
+      const result = rootNodes.map(root => {
+        return { id: root.id, items: generateItems(root.id) };
+      });
+
+      return result;
+    },
+  },
+  methods: {
+    setStruct(struct) {
+      this.struct = struct;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .GraphStructurePanel {
   height: 100%;
   width: 100%;
@@ -229,7 +248,7 @@ export default {
   *::before {
     box-sizing: border-box;
   }
-    
+
   .ButtonsGroup {
     display: flex;
     align-items: center;
