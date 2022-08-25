@@ -1,194 +1,43 @@
 <template>
   <div class="GraphStructurePanel">
-    <div class="ButtonsGroup">
-      <div class="ButtonsLeft">
-        <button class="ButtonIcon">
-          <span class="FontIcon name_longDown rotate_180"></span>
-        </button>
-        <button class="ButtonIcon">
-          <span class="FontIcon name_hide"></span>
-        </button>
+    <div class="PanelHeader">
+      <div class="ButtonsGroup">
+        <div class="ButtonsLeft">
+          <button class="ButtonIcon" @click="isAllExpanded = !isAllExpanded">
+            <span
+              class="FontIcon name_longDown"
+              :class="{ rotate_180: isAllExpanded }"
+            ></span>
+          </button>
+          <!-- <button class="ButtonIcon">
+            <span class="FontIcon name_hide"></span>
+          </button> -->
+        </div>
+        <!-- <button class="ButtonIcon">
+          <span class="FontIcon name_chevronBigDown rotate_90"></span>
+        </button> -->
       </div>
-      <button class="ButtonIcon">
-        <span class="FontIcon name_chevronBigDown rotate_90"></span>
-      </button>
-    </div>
-
-    <base-input
-      placeholder="Поиск"
-      theme="withLeftIcon"
-      class="SearchField"
-    >
-      <span
-        slot="icon-left"
-        class="FontIcon name_searchSmall size_lg"
+      <base-input
+        placeholder="Поиск"
+        theme="withLeftIcon"
+        type="search"
+        @input="search = $event.target.value"
       >
-      </span>
-    </base-input>
-
+        <span
+          slot="icon-left"
+          class="FontIcon name_searchSmall size_lg"
+        >
+        </span>
+      </base-input>
+    </div>
     <div class="ExpanderGroup">
+      <div v-if="!isEmptyList" class="EmptySearch">Нет элементов</div>
       <Tree
         v-for="node in nodes"
-        :key="node.title"
+        :key="node.id"
         :node="node"
+        :is-expanded="isAllExpanded"
       />
-<!--
-      <base-expander
-        class="PanelExpander"
-        theme="theme_iconLeft,rotation_type2"
-      >
-        <span
-          slot="icon-arrow"
-          class="FontIcon name_caretDown rotate_270 size_lg"
-        ></span>
-
-        <div slot="summary">
-          <span
-            slot="icon"
-            class="FontIcon name_gridBigRound"
-          >
-        </span>ТЭЦ 1</div>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 1
-            <span
-              slot="icon-arrow"
-              class="FontIcon name_hide size_lg"
-            ></span></div>
-
-          <base-expander
-            class="PanelExpander type_nested font_normal"
-            theme="theme_iconLeft,rotation_type2"
-          >
-            <span
-              slot="icon-arrow"
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">Генератоная установка</div>
-          </base-expander>
-
-          <base-expander
-            class="PanelExpander type_nested font_normal"
-            theme="theme_iconLeft,rotation_type2"
-          >
-            <span
-              slot="icon-arrow"
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">Трансформаторная установка</div>
-          </base-expander>
-
-          <base-expander
-            class="PanelExpander type_nested font_normal"
-            theme="theme_iconLeft,rotation_type2"
-          >
-            <span
-              slot="icon-arrow"
-              class="FontIcon name_caretDown rotate_270 size_lg"
-            >
-            </span>
-            <div slot="summary">KE Котёл энергетический
-              <span
-              slot="icon"
-              class="FontIcon name_show size_lg"
-            ></span></div>
-          </base-expander>
-        </base-expander>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 2</div>
-        </base-expander>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 3</div>
-        </base-expander>
-      </base-expander>
--->
-
-<!--
-      <base-expander
-        class="PanelExpander"
-        theme="theme_iconLeft,rotation_type2"
-      >
-        <span
-          slot="icon-arrow"
-          class="FontIcon name_caretDown rotate_270 size_lg"
-        ></span>
-
-        <div slot="summary">
-          <span
-            slot="icon"
-            class="FontIcon name_gridBigRound"
-          >
-        </span>ТЭЦ 2</div>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 1</div>
-        </base-expander>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 2
-            <span
-              slot="icon-arrow"
-              class="FontIcon name_hide size_lg"
-            ></span></div>
-        </base-expander>
-
-        <base-expander
-          class="PanelExpander type_nested"
-          theme="theme_iconLeft,rotation_type2"
-        >
-          <span
-            slot="icon-arrow"
-            class="FontIcon name_caretDown rotate_270 size_lg"
-          >
-          </span>
-          <div slot="summary">Блок 3</div>
-        </base-expander>
-      </base-expander>
--->
     </div>
   </div>
 </template>
@@ -201,6 +50,8 @@ export default {
   components: { Tree },
   data: () => ({
     struct: [],
+    search: '',
+    isAllExpanded: false,
   }),
   computed: {
     nodes() {
@@ -215,21 +66,53 @@ export default {
       const generateItems = nodeID => {
         const { successors } = nodeMap[nodeID];
         return successors.map(suc => {
-          const sucID = suc.tag.primitiveID;
-          return { id: sucID, items: generateItems(sucID) };
+          const id = suc.tag.primitiveID;
+          const items = generateItems(id);
+          let show = true;
+
+          if (this.search.length > 0) {
+            show = this.toSearchSubstr(id);
+          }
+
+          if (items.length > 0 && items.some(i => i.show === true)) {
+            show = true;
+          }
+
+          return { id, show, items };
         });
       };
 
-      const result = rootNodes.map(root => {
-        return { id: root.id, items: generateItems(root.id) };
+      const result = rootNodes.map(({ id }) => {
+        const items = generateItems(id);
+        let show = true;
+
+        if (this.search.length > 0) {
+          show = this.toSearchSubstr(id);
+        }
+
+        if (items.length > 0 && items.some(i => i.show === true)) {
+          show = true;
+        }
+
+        return { id, show, items };
       });
 
       return result;
+    },
+
+    isEmptyList() {
+      return this.nodes.some(n => n.show === true);
     },
   },
   methods: {
     setStruct(struct) {
       this.struct = struct;
+    },
+
+    toSearchSubstr(str) {
+      const substr = str.toLowerCase();
+      const searchLower = this.search.toLowerCase();
+      return substr.includes(searchLower);
     },
   },
 };
@@ -237,9 +120,10 @@ export default {
 
 <style lang="scss" scoped>
 .GraphStructurePanel {
+  display: grid;
+  grid-template-rows: auto 1fr;
   height: 100%;
   width: 100%;
-  padding: 10px;
   background-color: var(--background_main);
 
   &,
@@ -249,10 +133,15 @@ export default {
     box-sizing: border-box;
   }
 
+  .PanelHeader {
+    padding: 10px;
+  }
+
   .ButtonsGroup {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 10px;
   }
 
   .ButtonsLeft {
@@ -270,62 +159,25 @@ export default {
 
     .FontIcon {
       font-size: 20px;
-
-      &.name_hide {
-        color: var(--text_secondary);
-      }
     }
   }
 
   .FontIcon {
     color: var(--text_secondary);
-
-    &.name_caretDown {
-      color: var(--text_main);
-    }
-
-    &.name_gridBigRound {
-      color: var(--purple);
-      margin-left: -6px;
-      font-size: 20px;
-    }
-
-    &.name_hide {
-      color: var(--accent);
-    }
-  }
-
-  .SearchField {
-    padding-top: 10px;
   }
 
   .ExpanderGroup {
-    padding-top: 10px;
-  }
+    padding: 0px;
+    padding-top: 0;
+    overflow: auto;
 
-  .PanelExpander {
-    color: var(--text_main);
-    background-color: var(--background_main);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-
-    &.type_nested {
-      padding-left: 21px;
-    }
-
-    &.font_normal {
-      font-weight: 400;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    & > * {
+    .EmptySearch {
       display: flex;
       align-items: center;
-      column-gap: 4px;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--text_secondary);
     }
   }
 }

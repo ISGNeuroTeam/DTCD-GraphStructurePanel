@@ -1,23 +1,35 @@
 <template>
   <base-expander
+    v-show="node.show"
+    :open="open"
     class="PanelExpander"
     :class="{ type_nested: isNested }"
     theme="theme_iconLeft,rotation_type2"
+    @click="expand"
   >
     <span slot="icon-arrow" :class="arrowIcon"/>
 
     <div slot="summary">
-      <!-- <span slot="icon" class="FontIcon name_gridBigRound"/> -->
+      <span
+        v-if="icon"
+        slot="icon"
+        class="FontIcon size_lg MainIcon"
+        :class="`name_${icon}`"
+      />
       {{ node.id }}
-      <!-- <span slot="icon-arrow" class="FontIcon name_hide size_lg"/> -->
+      <!-- <span
+        slot="icon-arrow"
+        class="FontIcon name_hide size_lg ShowIcon"
+      /> -->
     </div>
 
     <template v-if="node.items && node.items.length > 0">
       <Tree
-        v-for="(item, index) in node.items"
-        :key="`item-${index}`"
+        v-for="item in node.items"
+        :key="item.id"
         :node="item"
         :is-nested="true"
+        :is-expanded="isExpanded"
       />
     </template>
   </base-expander>
@@ -28,13 +40,22 @@ export default {
   name: 'Tree',
   props: {
     node: { type: Object },
-    isNested: false,
+    isNested: { type: Boolean },
+    isExpanded: { type: Boolean },
+    icon: { type: String, default: '' },
   },
   data: () => ({
-    arrowIcon: 'FontIcon name_caretDown rotate_270 size_lg'
+    arrowIcon: 'FontIcon name_caretDown rotate_270 size_lg',
   }),
   computed: {
-
+    open() {
+      return this.node.items.length <= 0 ? false : this.isExpanded;
+    },
+  },
+  methods: {
+    expand(event) {
+      this.node.items.length <= 0 && event.preventDefault();
+    },
   },
 };
 </script>
@@ -42,21 +63,16 @@ export default {
 <style lang="scss" scoped>
 .PanelExpander {
   color: var(--text_main);
-  background-color: var(--background_main);
   font-weight: 600;
   display: block;
-  margin-bottom: 4px;
+  padding: 0 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
 
   &.type_nested {
     padding-left: 21px;
-  }
-
-  &.font_normal {
-    font-weight: 400;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
   }
 
   & > * {
@@ -64,23 +80,32 @@ export default {
     align-items: center;
     column-gap: 4px;
   }
-}
 
-.FontIcon {
-  color: var(--text_secondary);
-
-  &.name_caretDown {
-    color: var(--text_main);
+  &:hover {
+    background-color: var(--button_primary_12);
+    .ShowIcon {
+      visibility: visible;
+    }
   }
 
-  &.name_gridBigRound {
-    color: var(--purple);
-    margin-left: -6px;
-    font-size: 20px;
+  .MainIcon {
+    margin-left: -8px;
   }
 
-  &.name_hide {
-    color: var(--accent);
+  .ShowIcon {
+    visibility: hidden;
+  }
+
+  .FontIcon {
+    color: var(--text_secondary);
+
+    &.name_caretDown {
+      color: var(--text_main);
+    }
+
+    &.name_hide {
+      color: var(--accent);
+    }
   }
 }
 </style>
