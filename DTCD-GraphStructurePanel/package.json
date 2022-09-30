@@ -1,6 +1,6 @@
 {
   "name": "dtcd-graph-structure-panel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Panel for displaying graph structure",
   "private": true,
   "homepage": "https://github.com/ISGNeuroTeam/DTCD-GraphStructurePanel",
