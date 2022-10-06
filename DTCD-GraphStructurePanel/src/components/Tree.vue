@@ -45,11 +45,18 @@ export default {
     icon: { type: String, default: '' },
   },
   data: () => ({
-    arrowIcon: 'FontIcon name_caretDown rotate_270 size_lg',
   }),
   computed: {
     open() {
       return this.node.items.length <= 0 ? false : this.isExpanded;
+    },
+
+    arrowIcon() {
+      if (this.node.items && this.node.items.length > 0) {
+        return 'FontIcon name_caretDown rotate_270 size_lg'
+      } else {
+        return 'FontIcon name_dot size_md'
+      }
     },
   },
   methods: {
@@ -99,8 +106,13 @@ export default {
   .FontIcon {
     color: var(--text_secondary);
 
-    &.name_caretDown {
+    &.name_caretDown, 
+    &.name_dot {
       color: var(--text_main);
+    }
+
+    &.name_dot {
+      margin-top: -3px;
     }
 
     &.name_hide {
