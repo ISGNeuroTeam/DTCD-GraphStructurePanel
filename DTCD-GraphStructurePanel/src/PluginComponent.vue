@@ -55,40 +55,18 @@ export default {
   }),
   computed: {
     nodes() {
-      const nodeMap = {};
+      const nodes = this.struct.map(item => {
+        const { id, successors } = item;
+        let show = this.toSearchSubstr(id);
 
-      const rootNodes = this.struct.filter(str => {
-        const { id, node, successors } = str;
-        nodeMap[id] = { node, successors };
-        return str.predecessors.length <= 0;
-      });
-
-      const generateItems = nodeID => {
-        const { successors } = nodeMap[nodeID];
-        return successors.map(suc => {
-          const id = suc.tag.primitiveID;
-          const items = generateItems(id);
-          let show = true;
-
-          if (this.search.length > 0) {
-            show = this.toSearchSubstr(id);
-          }
-
-          if (items.length > 0 && items.some(i => i.show === true)) {
-            show = true;
-          }
-
-          return { id, show, items };
-        });
-      };
-
-      const result = rootNodes.map(({ id }) => {
-        const items = generateItems(id);
-        let show = true;
-
-        if (this.search.length > 0) {
-          show = this.toSearchSubstr(id);
-        }
+        const items = successors
+          .map(successor => {
+            const id = successor.tag.primitiveID;
+            const show = this.search.length > 0 ? this.toSearchSubstr(id) : true;
+            return { id, show, items: [] };
+          })
+          .filter(s => s.show === true)
+          .sort(this.sortById);
 
         if (items.length > 0 && items.some(i => i.show === true)) {
           show = true;
@@ -97,7 +75,7 @@ export default {
         return { id, show, items };
       });
 
-      return result;
+      return nodes.sort(this.sortById);
     },
 
     isEmptyList() {
@@ -113,6 +91,13 @@ export default {
       const substr = str.toLowerCase();
       const searchLower = this.search.toLowerCase();
       return substr.includes(searchLower);
+    },
+
+    sortById(a, b) {
+      const idA = a.id.toUpperCase();
+      const idB = b.id.toUpperCase();
+      if (idA < idB) return -1;
+      return idA > idB ? 1 : 0;
     },
   },
 };

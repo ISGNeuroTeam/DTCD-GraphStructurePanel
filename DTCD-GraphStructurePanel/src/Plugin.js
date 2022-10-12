@@ -22,7 +22,7 @@ export class VisualizationText extends PanelPlugin {
     this.#logSystem = logSystem;
     this.#eventSystem = eventSystem;
 
-    this.#eventSystem.registerPluginInstance(this);
+    this.#eventSystem.registerPluginInstance(this, ['StructNodeClicked']);
 
     const { default: VueJS } = this.getDependence('Vue');
     const data = { logSystem, eventSystem };

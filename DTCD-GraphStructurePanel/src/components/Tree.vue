@@ -9,18 +9,23 @@
   >
     <span slot="icon-arrow" :class="arrowIcon"/>
 
-    <div slot="summary">
+    <div slot="summary" class="ExpanderSummary">
       <span
         v-if="icon"
         slot="icon"
         class="FontIcon size_lg MainIcon"
         :class="`name_${icon}`"
       />
-      {{ node.id }}
-      <!-- <span
+      <span
+        class="Title"
+        v-text="node.id"
+      />
+      <span
         slot="icon-arrow"
-        class="FontIcon name_hide size_lg ShowIcon"
-      /> -->
+        title="Перейти к графу"
+        class="FontIcon name_chevronDuoDown rotate_270 ShowIcon"
+        @click.prevent="selectItem(node.id)"
+      />
     </div>
 
     <template v-if="node.items && node.items.length > 0">
@@ -44,7 +49,8 @@ export default {
     isExpanded: { type: Boolean },
     icon: { type: String, default: '' },
   },
-  data: () => ({
+  data: ({ $root }) => ({
+    eventSystem: $root.eventSystem,
   }),
   computed: {
     open() {
@@ -53,15 +59,19 @@ export default {
 
     arrowIcon() {
       if (this.node.items && this.node.items.length > 0) {
-        return 'FontIcon name_caretDown rotate_270 size_lg'
+        return 'FontIcon name_caretDown rotate_270';
       } else {
-        return 'FontIcon name_dot size_md'
+        return 'FontIcon name_dot';
       }
     },
   },
   methods: {
     expand(event) {
       this.node.items.length <= 0 && event.preventDefault();
+    },
+
+    selectItem(id) {
+      this.eventSystem.publishEvent('StructNodeClicked', id);
     },
   },
 };
@@ -72,26 +82,38 @@ export default {
   color: var(--text_main);
   font-weight: 600;
   display: block;
-  padding: 0 10px;
-
-  &:not(:last-child) {
-    margin-bottom: 4px;
-  }
+  padding: 4px 10px;
 
   &.type_nested {
-    padding-left: 21px;
-  }
-
-  & > * {
-    display: flex;
-    align-items: center;
-    column-gap: 4px;
+    padding-left: 18px;
+    padding-right: 0;
   }
 
   &:hover {
     background-color: var(--button_primary_12);
-    .ShowIcon {
-      visibility: visible;
+
+    > .ExpanderSummary {
+      .Title {
+        padding-right: 6px;
+      }
+
+      .ShowIcon {
+        display: block;
+      }
+    }
+  }
+
+  .ExpanderSummary {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    overflow: hidden;
+
+    .Title {
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -100,23 +122,25 @@ export default {
   }
 
   .ShowIcon {
-    visibility: hidden;
+    display: none;
+    font-size: 18px;
+
+    &:hover {
+      color: var(--button_primary);
+      background-color: var(--button_primary_24);
+    }
   }
 
   .FontIcon {
     color: var(--text_secondary);
 
-    &.name_caretDown, 
+    &.name_caretDown,
     &.name_dot {
       color: var(--text_main);
     }
 
     &.name_dot {
-      margin-top: -3px;
-    }
-
-    &.name_hide {
-      color: var(--accent);
+      margin-top: -2px;
     }
   }
 }
